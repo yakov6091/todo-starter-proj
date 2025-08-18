@@ -37,7 +37,7 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
         onSetFilterBy(filterByToEdit)
     }
 
-    const { txt, importance } = filterByToEdit
+    const { txt, importance, isDone } = filterByToEdit
     return (
         <section className="todo-filter">
             <h2>Filter Todos</h2>
