@@ -8,7 +8,11 @@ export const userService = {
     signup,
     getById,
     query,
-    getEmptyCredentials
+    getEmptyCredentials,
+    updateBalance,
+    updateUserPreffs,
+    addActivity,
+    getDefaultPrefs
 }
 const STORAGE_KEY_LOGGEDIN = 'user'
 const STORAGE_KEY = 'userDB'
@@ -60,6 +64,70 @@ function getEmptyCredentials() {
         password: 'muki1',
     }
 }
+
+
+function updateBalance(diff) {
+    // return
+    const loggedinUser = getLoggedinUser()
+    if (!loggedinUser) return
+    return getById(loggedinUser._id)
+        .then(user => {
+            user.balance += diff
+            return storageService.put(STORAGE_KEY, user)
+                .then((user) => {
+                    _setLoggedinUser(user)
+                    return user.balance
+                })
+        })
+}
+
+function updateUserPreffs(userToUpdate) {
+    const loggedinUserId = getLoggedinUser()._id
+    return getById(loggedinUserId)
+        .then(user => {
+            user = { ...user, ...userToUpdate }
+            return storageService.put(STORAGE_KEY, user)
+                .then((savedUser) => {
+                    _setLoggedinUser(savedUser)
+                    return savedUser
+                })
+        })
+}
+
+function addActivity(txt) {
+    const activity = {
+        txt,
+        at: Date.now()
+    }
+
+    const loggedinUser = getLoggedinUser()
+    if (!loggedinUser) return Promise.reject('No loggedin user')
+    return getById(loggedinUser._id)
+        .then(user => {
+            if (!user.activities) user.activities = []
+            user.activities.unshift(activity)
+            return user
+        })
+        .then(userToUpdate => {
+            return storageService.put(STORAGE_KEY, userToUpdate)
+                .then((savedUser) => {
+                    _setLoggedinUser(savedUser)
+                    return savedUser
+                })
+        })
+}
+
+function _setLoggedinUser(user) {
+    const userToSave = { _id: user._id, fullname: user.fullname, balance: user.balance, pref: user.pref, activities: user.activities }
+    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
+    return userToSave
+}
+
+function getDefaultPrefs() {
+    return { color: '#eeeeee', bgColor: "#191919", fullname: '' }
+}
+
+
 
 // signup({username: 'muki', password: 'muki1', fullname: 'Muki Ja'})
 // login({username: 'muki', password: 'muki1'})

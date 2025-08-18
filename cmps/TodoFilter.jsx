@@ -1,12 +1,14 @@
-const { useState, useEffect } = React
+import { utilService } from "../services/util.service.js"
+const { useState, useEffect, useRef } = React
 
 export function TodoFilter({ filterBy, onSetFilterBy }) {
-
-    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    const debouncedSetFilterRef = useRef(utilService.debounce(onSetFilterBy, 500))
 
     useEffect(() => {
         // Notify parent
-        onSetFilterBy(filterByToEdit)
+        // onSetFilterBy(filterByToEdit)
+        debouncedSetFilterRef.current(filterByToEdit)
     }, [filterByToEdit])
 
     function handleChange({ target }) {
@@ -40,6 +42,17 @@ export function TodoFilter({ filterBy, onSetFilterBy }) {
         <section className="todo-filter">
             <h2>Filter Todos</h2>
             <form onSubmit={onSubmitFilter}>
+                <select
+                    value={isDone}
+                    className="flex justify-center align-center"
+                    name="isDone"
+                    onChange={(ev) => handleChange(ev)}
+                >
+                    <option value="all">All</option>
+                    <option value="done">Done</option>
+                    <option value="undone">Active</option>
+                </select>
+
                 <input value={txt} onChange={handleChange}
                     type="search" placeholder="By Txt" id="txt" name="txt"
                 />

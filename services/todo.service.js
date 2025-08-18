@@ -18,19 +18,37 @@ export const todoService = {
 window.cs = todoService
 
 function query(filterBy = {}) {
-    return storageService.query(TODO_KEY)
-        .then(todos => {
-            if (filterBy.txt) {
-                const regExp = new RegExp(filterBy.txt, 'i')
-                todos = todos.filter(todo => regExp.test(todo.txt))
-            }
+    return storageService.query(TODO_KEY).then((todos) => {
+        if (filterBy.txt) {
+            const regExp = new RegExp(filterBy.txt, 'i')
+            todos = todos.filter((todo) => regExp.test(todo.txt))
+        }
 
-            if (filterBy.importance) {
-                todos = todos.filter(todo => todo.importance >= filterBy.importance)
-            }
+        if (filterBy.importance) {
+            todos = todos.filter((todo) => todo.importance >= filterBy.importance)
+        }
 
-            return todos
-        })
+        if (filterBy.isDone !== 'all') {
+            todos = todos.filter((todo) =>
+                filterBy.isDone === 'done' ? todo.isDone : !todo.isDone
+            )
+        }
+
+        if (filterBy.sort) {
+            if (filterBy.sort === 'txt') {
+                todos = todos.sort((a, b) => a.txt.localeCompare(b.txt))
+            } else if (filterBy.sort === 'createdAt') {
+                todos = todos.sort((a, b) => a.createdAt - b.createdAt)
+            }
+        }
+
+        const filteredTodosLength = todos.length
+        if (filterBy.pageIdx !== undefined) {
+            const startIdx = filterBy.pageIdx * PAGE_SIZE
+            todos = todos.slice(startIdx, startIdx + PAGE_SIZE)
+        }
+        return includeDataFromServer({ todos, filteredTodosLength })
+    })
 }
 
 function get(todoId) {
