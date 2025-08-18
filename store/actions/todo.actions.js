@@ -6,7 +6,7 @@ import {
     SET_TODOS,
     UPDATE_TODO,
     store,
-    SET_DONE_TODOS_PERCENT,
+    SET_DONE_TODOS,
     SET_MAX_PAGE,
     SET_FILTER_BY,
 } from '../store.js'
@@ -71,10 +71,10 @@ export function removeTodo(todoId) {
         })
 }
 
-function _setTodosData(doneTodosPercent, maxPage) {
+function _setTodosData(doneTodos, maxPage) {
     store.dispatch({
-        type: SET_DONE_TODOS_PERCENT,
-        doneTodosPercent,
+        type: SET_DONE_TODOS,
+        doneTodos,
     })
     store.dispatch({
         type: SET_MAX_PAGE,

@@ -3,7 +3,6 @@ const { useSelector } = ReactRedux
 
 import { Chart } from '../cmps/Chart.jsx'
 import { todoService } from '../services/todo.service.js'
-import { todoService } from '../services/todo.service.js'
 import { loadTodos } from '../store/actions/todo.actions.js'
 
 export function Dashboard() {

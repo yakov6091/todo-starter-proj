@@ -80,7 +80,7 @@ export function TodoIndex() {
     return (
         <section className="todo-index">
             <TodoFilter filterBy={filterBy} onSetFilterBy={onSetFilterSort} />
-            <TodoSort filterBy={filterBy} onSetFilterBy={onSetFilterSort} />
+
             <PaginationBtns filterSortBy={filterBy} onChangePageIdx={onChangePageIdx} />
             <Link to="/todo/edit" className="add-todo-btn btn" >Add Todo</Link>
             {isLoading
