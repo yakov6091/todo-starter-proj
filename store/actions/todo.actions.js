@@ -31,7 +31,6 @@ export function loadTodos(filterSort) {
         .finally(() => {
             store.dispatch({ type: SET_IS_LOADING, isLoading: false })
         })
-
 }
 
 export function saveTodo(todo) {
@@ -72,7 +71,6 @@ export function removeTodo(todoId) {
         })
 }
 
-
 function _setTodosData(doneTodosPercent, maxPage) {
     store.dispatch({
         type: SET_DONE_TODOS_PERCENT,
@@ -82,7 +80,4 @@ function _setTodosData(doneTodosPercent, maxPage) {
         type: SET_MAX_PAGE,
         maxPage,
     })
-
-
 }
-
