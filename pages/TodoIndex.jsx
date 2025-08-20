@@ -11,9 +11,11 @@ import { PaginationBtns } from "../cmps/PaginationBtns.jsx"
 import { utilService } from "../services/util.service.js"
 
 const { useState, useEffect } = React
-const { useSelector, useDispatch } = ReactRedux
+const { useSelector } = ReactRedux
 const { Link, useSearchParams } = ReactRouterDOM
-
+// Component -> Action -> Reducer -> Components (with useSelector)
+// Once reducer change the state
+// All the components that 'useSelector' to that specific data, re-render
 export function TodoIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(todoService.getFilterFromSearchParams(searchParams))
