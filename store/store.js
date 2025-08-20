@@ -1,9 +1,7 @@
-import { todoReducer } from './reducers/car.reducer.js'
+import { todoReducer } from './reducers/todo.reducer.js'
 import { userReducer } from './reducers/user.reducer.js'
 
-
 const { createStore, combineReducers, compose } = Redux
-
 
 const rootReducer = combineReducers({
     todoModule: todoReducer,
@@ -11,9 +9,9 @@ const rootReducer = combineReducers({
 })
 
 
-const middleware = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() || compose
-export const store = createStore(rootReducer, middleware)
+// const middleware = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() || compose
+// export const store = createStore(rootReducer, middleware)
 
 
-// export const store = createStore(rootReducer)
+export const store = createStore(rootReducer)
 window.gStore = store

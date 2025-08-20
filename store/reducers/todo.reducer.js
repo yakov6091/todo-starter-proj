@@ -1,5 +1,5 @@
 const { createStore, compose } = Redux
-import { todoService } from '../services/todo.service.js'
+import { todoService } from '../../services/todo.service.js'
 
 export const SET_TODOS = 'SET_TODOS'
 export const SET_DONE_TODOS = 'SET_DONE_TODOS'
@@ -8,12 +8,14 @@ export const ADD_TODO = 'ADD_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const UPDATE_TODO = 'UPDATE_TODO'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
+export const SET_IS_LOADING = 'SET_IS_LOADING'
 
 const initialState = {
     todos: [],
     doneTodos: 0,
     filterBy: todoService.getDefaultFilter(),
     maxPage: 0,
+    isLoading: false
 
 }
 
@@ -32,6 +34,11 @@ export function todoReducer(state = initialState, cmd) {
             return { ...state, doneTodos: cmd.doneTodos }
         case SET_MAX_PAGE:
             return { ...state, maxPage: cmd.maxPage }
+        case SET_IS_LOADING:
+            return {
+                ...state, isLoading: cmd.isLoading
+            }
+
 
         default:
             return state

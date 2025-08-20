@@ -5,12 +5,15 @@ import {
     REMOVE_TODO,
     SET_TODOS,
     UPDATE_TODO,
-    store,
     SET_DONE_TODOS,
     SET_MAX_PAGE,
     SET_FILTER_BY,
-} from '../store.js'
+} from '../reducers/todo.reducer.js'
 import { addActivity } from './user.actions.js'
+
+import { store } from '../store.js'
+
+
 
 export function loadTodos(filterSort) {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })

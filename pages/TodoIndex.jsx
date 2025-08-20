@@ -19,9 +19,9 @@ const { Link, useSearchParams } = ReactRouterDOM
 export function TodoIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(todoService.getFilterFromSearchParams(searchParams))
-    const todos = useSelector((storeState) => storeState.todos)
-    const isLoading = useSelector(storeState => storeState.isLoading)
-    const maxPage = useSelector((storeState) => storeState.maxPage)
+    const todos = useSelector((storeState) => storeState.todoModule.todos)
+    const isLoading = useSelector(storeState => storeState.userModule.isLoading)
+    const maxPage = useSelector((storeState) => storeState.todoModule.maxPage)
 
     useEffect(() => {
         loadTodos(filterBy)
